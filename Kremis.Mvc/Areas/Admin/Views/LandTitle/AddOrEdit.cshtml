@@ -1,0 +1,101 @@
+﻿@model LandTitleViewModel
+
+@{
+    Layout = null;
+}
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="input-group-sm col-5 mx-n4">
+            <div class="row">
+                @if (!Model.LandTitle.IsNew())
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model.LandTitle.Id">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                @if (Model.ReturnToDetailView)
+                {
+                    <div class="input-group-sm col">
+                        <a asp-controller="LandTitle" asp-action="Summary" asp-route-id="@Model.LandTitle.Id" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <a asp-controller="LandTitle" asp-action="Index" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="border rounded bg-gradient-light mx-n4 p-2">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.LandTitle.Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!Model.LandTitle.IsNew())
+            {
+                <input type="hidden" asp-for="LandTitle.Id" />
+                <input type="hidden" asp-for="ReturnToDetailView" />
+            }
+            <div class="input-group-sm col p-2">
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        N° du titre
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="LandTitle.Number" class="form-control text-capitalize" id="txtNumber" />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Propriétaire
+                    </div>
+                    <div class="input-group-sm col-7">
+                        <input asp-for="LandTitle.Owner" class="form-control text-capitalize" />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Localité
+                    </div>
+                    <div class="input-group-sm col-7">
+                        @Html.DropDownListFor(m => m.LandTitle.LocalityId, Model.LocalityList, "Sélectionnez ...",
+                       new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Superficie (en m²)
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="LandTitle.Surface" class="form-control text-right" asp-format="{0:N0}" />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Description/Commentaire
+                    </div>
+                    <div class="input-group-sm col-7">
+                        <textarea asp-for="LandTitle.Description" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

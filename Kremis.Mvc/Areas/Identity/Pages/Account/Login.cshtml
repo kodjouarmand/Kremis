@@ -1,0 +1,66 @@
+﻿@page
+@model LoginModel
+
+@{
+    Layout = null;
+    ViewData["Title"] = "KREMIS - Connexion";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>@ViewData["Title"]</title>
+    <link href="~/css/login.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/sb-admin-2.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="overlay-container text-white bg-gradient-primary">
+            <img src="~/images/logo.png" style="margin-top: 30%;" alt="" />
+            <br />
+            <h1>
+                KREMIS
+            </h1>
+            <h4>
+                <i>Kokaar Real Estate Management Information System</i>
+            </h4>
+        </div>
+        <div class="form-container sign-in-container">
+            <form id="account" method="post">
+                <h1 class="mb-3 text-primary"><i class="fa fa-lock"></i> Connexion</h1>
+                <input asp-for="Input.UserName" placeholder="Login..." class="mb-1 form-control w-50" />
+                <input asp-for="Input.Password" placeholder="Mot de passe..." type="password" class="form-control w-50" />
+                <button type="submit" class="btn btn btn-success btn-block mt-3 rounded-4 w-25">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5z" />
+                    </svg> Se connecter
+                </button>
+                <br />
+                <h5>
+                    <a id="forgot-password" asp-page="./ForgotPassword">
+                        Mot de passe oublié ?
+                    </a>
+                </h5>
+                <hr />
+                <div class="separator">
+                    <p class="change_link">
+                        Vous n’avez pas de compte  ? Contactez l'administrateur
+                    </p>
+                </div>
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </form>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

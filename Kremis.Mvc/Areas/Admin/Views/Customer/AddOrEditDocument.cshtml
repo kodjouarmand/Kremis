@@ -1,0 +1,86 @@
+﻿@model CustomerDocumentViewModel
+
+@{
+    Layout = null;
+}
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="input-group-sm col-5 mx-n4">
+            <div class="row">
+                @if (!Model.CustomerDocument.IsNew())
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model.CustomerDocument.Id">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                <div class="input-group-sm col">
+                    <a asp-controller="Customer" asp-action="Summary" asp-route-id="@Model.CustomerDocument.CustomerId" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                        <partial name="_IconReturn" />&nbsp;Quitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border rounded bg-gradient-light mx-n4 p-2">
+        <form asp-action="AddOrEditDocument" asp-route-id="@Model.CustomerDocument.Id" enctype="multipart/form-data" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!Model.CustomerDocument.IsNew())
+            {
+                <input type="hidden" asp-for="CustomerDocument.Id" />
+                <input type="hidden" asp-for="CustomerDocument.DocumentUrl" />
+            }
+            <input type="hidden" asp-for="CustomerDocument.CustomerId" />
+            <div class="input-group-sm col">
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Client
+                    </div>
+                    <div class="input-group-sm col-8">
+                        <input asp-for="CustomerDocument.Customer.Name" class="form-control" disabled />
+                    </div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.CustomerDocument.DocumentUrl))
+                {
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-3">
+                            Nom du document
+                        </div>
+                        <div class="input-group-sm col-8">
+                            <input asp-for="CustomerDocument.DocumentUrl" class="form-control" disabled />
+                        </div>
+                    </div>
+                }
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Type de document
+                    </div>
+                    <div class="input-group-sm col-8">
+                        @Html.DropDownListFor(m => m.CustomerDocument.DocumentTypeId, Model.DocumentTypeList, "Sélectionnez ...",
+                       new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Charger le document
+                    </div>
+                    <div class="input-group col-8">
+                        <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

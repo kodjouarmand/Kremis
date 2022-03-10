@@ -1,0 +1,51 @@
+﻿@model PagedResult<LandTitleDto>
+
+    <div>
+        <table id="tblData" class="table table-striped table-bordered table-sm bg-white text-dark" style="width:100%">
+            <thead>
+                <tr class="bg-gradient-primary text-white">
+                    <th>N° du titre</th>
+                    <th>Propriétaire</th>
+                    <th>Localité</th>
+                    <th>Superficie</th>
+                    <th class="text-center" style="width:12%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Results)
+                {
+                    <tr>
+                        <td>
+                            @item.Number
+                        </td>
+                        <td>
+                            @item.Owner
+                        </td>
+                        <td>
+                            @item.Locality.Name
+                        </td>
+                        <td class="text-right">
+                            @item.Surface.GetValueOrDefault().ToString("N0")
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <a href="/Admin/LandTitle/Summary/@item.Id" class="btn btn-sm btn-info" style="cursor:pointer">
+                                    <partial name="_IconView" />
+                                </a>
+                                <a onclick="showInPopup('@Url.Action("AddOrEdit","LandTitle",new {id=item.Id},Context.Request.Scheme)','Modification d\'un titre foncier')" class="btn btn-sm btn-success text-white" style="cursor:pointer">
+                                    <partial name="_IconEdit" />
+                                </a>
+                                @if (IdentityHelper.IsAdministrator(User))
+                                {
+                                    <a onclick=Delete("/Admin/LandTitle/Delete/@item.Id") class="btn btn-sm btn-danger" style="cursor:pointer">
+                                        <partial name="_IconDelete" />
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @(await Component.InvokeAsync<PagerViewComponent>(Model))
+    </div>

@@ -1,0 +1,84 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Modifier votre profil";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">&nbsp;@ViewData["Title"]</h1>
+    </div>
+    <div class="p-4 border rounded bg-gradient-light">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="input-group-sm col-10">
+                    Compte d'utilisateur
+                </div>
+                <div class="input-group-sm col-12">
+                    <input asp-for="UserName" class="form-control" disabled />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="input-group-sm col-10">
+                    Nom complet
+                </div>
+                <div class="input-group-sm col-12">
+                    <input asp-for="Input.Name" class="form-control" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="input-group-sm col-10">
+                    Email
+                </div>
+                <div class="input-group-sm col-12">
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="input-group-sm col-10">
+                    N° de téléphone
+                </div>
+                <div class="input-group-sm col-12">
+                    <input asp-for="Input.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="input-group-sm col-10">
+                    Role
+                </div>
+                <div class="input-group-sm col-12">
+                    @Html.DropDownListFor(m => m.Input.Role, Model.Input.RoleList,
+                    "-Please select a role", new { @class = "form-control" })
+                    <span asp-validation-for="Input.Role" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="input-group-sm col-12">
+                    <div class="row">
+                        <div class="input-group-sm col">
+                            <button id="update-profile-button" type="submit" class="btn btn-sm btn-success form-control">
+                                <partial name="_IconSave" />&nbsp; Enregistrer
+                            </button>
+                        </div>
+                        <div class="input-group-sm col">
+                            <a asp-area="Operations" asp-controller="Home" asp-action="Index" class="btn btn-sm btn-outline-danger form-control">
+                                <partial name="_IconReturn" />&nbsp;Quitter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

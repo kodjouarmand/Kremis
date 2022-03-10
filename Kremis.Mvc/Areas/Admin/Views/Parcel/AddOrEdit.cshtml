@@ -1,0 +1,225 @@
+﻿@model ParcelViewModel
+
+@{
+    Layout = null;
+}
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="input-group-sm col-5 mx-n4">
+            <div class="row">
+                <div class="input-group-sm col">
+                    @if (!Model.Parcel.IsNew())
+                    {
+                        <div class="input-group-sm col">
+                            <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model.Parcel.Id">
+                                <partial name="_IconSave" />&nbsp;Enregistrer
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="input-group-sm col">
+                            <button type="submit" class="btn btn-sm btn-success form-control">
+                                <partial name="_IconSave" />&nbsp;Enregistrer
+                            </button>
+                        </div>
+                    }
+                </div>
+                <div class="input-group-sm col">
+                    @if (Model.ReturnToDetailView)
+                    {
+                        <div class="input-group-sm col">
+                            <a asp-controller="Parcel" asp-action="Summary" asp-route-id="@Model.Parcel.Id" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                                <partial name="_IconReturn" />&nbsp;Quitter
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="input-group-sm col">
+                            <a asp-controller="Parcel" asp-action="Index" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                                <partial name="_IconReturn" />&nbsp;Quitter
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border rounded bg-gradient-light mx-n4 p-2">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.Parcel.Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!Model.Parcel.IsNew())
+            {
+                //edit
+                <input type="hidden" asp-for="Parcel.Id" />
+                <input type="hidden" asp-for="ReturnToDetailView" />
+            }
+            <div class="row p-2">
+                <div class="input-group-sm col p-2">
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            N°
+                        </div>
+                        <div class="input-group-sm col-3">
+                            <input asp-for="Parcel.Number" class="form-control text-capitalize" id="txtNumber" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Titre foncier
+                        </div>
+                        <div class="input-group-sm col-3">
+                            @Html.DropDownListFor(m => m.Parcel.LandTitleId, Model.LandTitleList, "...",
+                           new { @class = "form-control", @id = "ddlLandTitles" })
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Localité
+                        </div>
+                        <div class="input-group-sm col-7">
+                            @Html.DropDownListFor(m => m.Parcel.LocalityId, Model.LocalityList, "...",
+                           new { @class = "form-control", @id = "ddlLocalities" })
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            N° de bloc
+                        </div>
+                        <div class="input-group-sm col-3">
+                            <input asp-for="Parcel.BlocNumber" class="form-control text-capitalize" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Superficie
+                        </div>
+                        <div class="input-group-sm col-3">
+                            <input asp-for="Parcel.Surface" class="form-control text-right" asp-format="{0:N0}" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Prix du m²
+                        </div>
+                        <div class="input-group-sm col-3">
+                            <input asp-for="Parcel.UnitPrice" id="txtUnitPrice" class="form-control text-right" asp-format="{0:N0}" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Prix min
+                        </div>
+                        <div class="input-group-sm col-3">
+                            <input asp-for="Parcel.MinimumUnitPrice" id="txtMinimumUnitPrice" class="form-control text-right" asp-format="{0:N0}" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Description
+                        </div>
+                        <div class="input-group-sm col-7">
+                            <textarea asp-for="Parcel.Description" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group-sm col-6 pt-4">
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Type de terrain
+                        </div>
+                        <div class="input-group-sm col-6">
+                            @Html.DropDownListFor(m => m.Parcel.LandType, Model.LandTypeList, "...",
+                           new { @class = "form-control" })
+                        </div><div class="input-group-sm col-1 p-0">
+                            <span asp-validation-for="Parcel.LandType" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Type de route
+                        </div>
+                        <div class="input-group-sm col-6">
+                            @Html.DropDownListFor(m => m.Parcel.RoadType, Model.RoadTypeList, "...",
+                           new { @class = "form-control" })
+                        </div><div class="input-group-sm col-1 p-0">
+                            <span asp-validation-for="Parcel.RoadType" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Répérage zone
+                        </div>
+                        <div class="input-group-sm col-6">
+                            @Html.DropDownListFor(m => m.Parcel.AreaMarking, Model.AreaMarkingList, "...",
+                           new { @class = "form-control" })
+                        </div><div class="input-group-sm col-1 p-0">
+                            <span asp-validation-for="Parcel.AreaMarking" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Dossier technique
+                        </div>
+                        <div class="input-group-sm col-3">
+                            @Html.DropDownListFor(m => m.Parcel.HasTechnicalFile, Model.YesNoList, "...",
+                           new { @class = "form-control" })
+                        </div><div class="input-group-sm col-1 p-0">
+                            <span asp-validation-for="Parcel.HasTechnicalFile" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Eau
+                        </div>
+                        <div class="input-group-sm col-3">
+                            @Html.DropDownListFor(m => m.Parcel.HasWater, Model.YesNoList, "...",
+                           new { @class = "form-control" })
+                        </div><div class="input-group-sm col-1 p-0">
+                            <span asp-validation-for="Parcel.HasWater" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Electricité
+                        </div>
+                        <div class="input-group-sm col-3">
+                            @Html.DropDownListFor(m => m.Parcel.HasElectrilocality, Model.YesNoList, "...",
+                           new { @class = "form-control" })
+                        </div><div class="input-group-sm col-1 p-0">
+                            <span asp-validation-for="Parcel.HasElectrilocality" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Images
+                        </div>
+                        <div class="input-group-sm col-3">
+                            @Html.DropDownListFor(m => m.Parcel.HasImages, Model.YesNoList, "...",
+                           new { @class = "form-control" })
+                        </div><div class="input-group-sm col-1 p-0">
+                            <span asp-validation-for="Parcel.HasImages" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Vidéos
+                        </div>
+                        <div class="input-group-sm col-3">
+                            @Html.DropDownListFor(m => m.Parcel.HasVideos, Model.YesNoList, "...",
+                           new { @class = "form-control" })
+                        </div><div class="input-group-sm col-1 p-0">
+                            <span asp-validation-for="Parcel.HasVideos" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

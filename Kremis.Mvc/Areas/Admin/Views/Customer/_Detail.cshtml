@@ -1,0 +1,89 @@
+﻿@model CustomerViewModel
+
+<form method="post">
+    <input type="hidden" asp-for="Customer.Id" />
+    <div class="row">
+        <div class="input-group-sm col-6 pt-4">
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Référence
+                </div>
+                <div class="input-group-sm col-3">
+                    <input asp-for="Customer.Reference" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Nom
+                </div>
+                <div class="input-group-sm col-6">
+                    <input asp-for="Customer.Name" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Type de pièce d'identité
+                </div>
+                <div class="input-group-sm col-6">
+                    <input asp-for="Customer.IdentityDocumentType.Name" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    N° de la pièce d'identité
+                </div>
+                <div class="input-group-sm col-3">
+                    <input asp-for="Customer.IdentityDocumentNumber" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    N° de téléphone
+                </div>
+                <div class="input-group-sm col-3">
+                    <input asp-for="Customer.PhoneNumber" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Email
+                </div>
+                <div class="input-group-sm col-6">
+                    <input asp-for="Customer.Email" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Adresse
+                </div>
+                <div class="input-group-sm col-6">
+                    <input asp-for="Customer.Address" class="form-control" disabled />
+                </div>
+            </div>
+            @*<div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Crédit maximum authorisé
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="Customer.MaximumCreditAuthorized" class="form-control text-right" asp-format="{0:N0}" disabled />
+                    </div>
+                </div>*@
+            @if (!string.IsNullOrWhiteSpace(Model.Customer.Comment))
+            {
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Commentaire
+                    </div>
+                    <div class="input-group-sm col-6">
+                        <textarea asp-for="Customer.Comment" class="form-control" disabled></textarea>
+                    </div>
+                </div>
+            }            
+        </div>
+        <div class="input-group-sm col-6 pt-4">
+            <div id="documents-view">
+                @await Html.PartialAsync("_Documents", Model)
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,76 @@
+﻿@model PagedResult<InvoicePaymentDto>
+
+    <div>
+        <table id="tblData" class="table table-striped table-bordered table-sm bg-white text-dark" style="width:100%">
+            <thead>
+                <tr class="bg-gradient-primary text-white">
+                    <th>N°</th>
+                    <th>Facture</th>
+                    <th>Date de règlement</th>
+                    <th>Montant reglé</th>
+                    <th>Mode de règlement</th>
+                    <th>N° de transaction</th>
+                    <th class="text-center" style="width:12%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Results)
+                {
+                    <tr>
+                        <td>
+                            @item.Number
+                        </td>
+                        <td>
+                            <a href="/Operations/InvoiceHeader/Summary/@item.InvoiceHeader.Id" class="bg-transparent" style="cursor:pointer">
+                                @item.InvoiceHeader.DisplayText
+                            </a>
+                        </td>
+                        <td>
+                            @item.Date.GetValueOrDefault().ToShortDateString()
+                        </td>
+                        <td class="text-right">
+                            @item.AmountPaid.GetValueOrDefault().ToString("N0")
+                        </td>
+                        <td>
+                            @item.PaymentMode.DisplayText
+                        </td>
+                        @if (!string.IsNullOrWhiteSpace(item.TransactionNumber))
+                        {
+                            <td>
+                                @item.TransactionNumber
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                AUCUN
+                            </td>
+                        }
+                        <td>
+                            <div class="text-center">
+                                <a href="/Operations/InvoicePayment/Summary/@item.Id" class="btn btn-sm btn-info" style="cursor:pointer">
+                                    <partial name="_IconView" />
+                                </a>
+                                <a href="/Operations/InvoicePayment/AddOrEdit/@item.Id" class="btn btn-sm btn-success" style="cursor:pointer">
+                                    <partial name="_IconEdit" />
+                                </a>
+                                @if (IdentityHelper.IsSuperAdministrator(User))
+                                {
+                                    <a onclick=Delete("/Operations/InvoicePayment/Delete/@item.Id") class="btn btn-sm btn-danger" style="cursor:pointer">
+                                        <partial name="_IconDelete" />
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-sm btn-light" style="cursor:pointer">
+                                        <partial name="_IconDelete" />
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @(await Component.InvokeAsync<PagerViewComponent>(Model))
+    </div>

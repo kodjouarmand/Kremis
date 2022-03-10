@@ -1,0 +1,208 @@
+﻿@model InvoiceHeaderViewModel
+
+@{
+    ViewData["Title"] = "Ajout d'une facture";
+    if (!Model.InvoiceHeader.IsNew())
+    {
+        ViewData["Title"] = "Modification d'une facture";
+    }
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">&nbsp;@ViewData["Title"]</h1>
+    </div>
+    <hr />
+    <div class="form-group row p-2">
+        <div class="input-group-sm col-3">
+            <div class="row">
+                @if (!Model.InvoiceHeader.IsNew())
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model.InvoiceHeader.Id">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                @if (Model.ReturnToHeaderView)
+                {
+                    <div class="input-group-sm col">
+                        <a asp-action="Summary" asp-route-id="@Model.InvoiceHeader.Id" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <a asp-controller="InvoiceHeader" asp-action="Index" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="border rounded bg-gradient-light">
+        <form method="post" asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!Model.InvoiceHeader.IsNew())
+            {
+                <input type="hidden" asp-for="InvoiceHeader.Id" />
+                <input type="hidden" asp-for="ReturnToHeaderView" />
+            }
+            <input type="hidden" asp-for="InvoiceHeader.Status" />
+            <input type="hidden" asp-for="InvoiceHeader.TotalSaleAmount" />
+            <input type="hidden" asp-for="InvoiceHeader.NetAmountToPay" />
+            <input type="hidden" asp-for="InvoiceHeader.AdvancedAmount" />
+            <input type="hidden" asp-for="InvoiceHeader.CommissionStatus" />
+            <input type="hidden" asp-for="InvoiceHeader.CommissionToPay" />
+            <input type="hidden" asp-for="InvoiceHeader.CommissionPaid" />
+            <input type="hidden" asp-for="InvoiceHeader.RemainingAmountToPay" />
+            <input type="hidden" asp-for="InvoiceDetail.Total" />
+            <div class="row p-2">
+                <div class="input-group-sm col-6 pt-4">
+                    @if (!Model.InvoiceHeader.IsNew())
+                    {
+                        <div class="form-group row mt-n2">
+                            <div class="input-group-sm col-4">
+                                Numéro
+                            </div>
+                            <div class="input-group-sm col-4">
+                                <input asp-for="InvoiceHeader.Number" class="form-control font-weight-bold" disabled />
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Client
+                        </div>
+                        <div class="input-group-sm col-6">
+                            @Html.DropDownListFor(m => m.InvoiceHeader.CustomerId, Model.CustomerList, "Sélectionnez ...",
+                                       new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Date
+                        </div>
+                        <div class="input-group-sm col-4">
+                            <input asp-for="InvoiceHeader.Date" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Echéance
+                        </div>
+                        <div class="input-group-sm col-4">
+                            <input asp-for="InvoiceHeader.PaymentDueDate" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Morcellement
+                        </div>
+                        <div class="input-group-sm col-4">
+                            <input asp-for="InvoiceHeader.ParcellingCosts" class="form-control text-right" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Dossier technique
+                        </div>
+                        <div class="input-group-sm col-4">
+                            <input asp-for="InvoiceHeader.TechnicalFileCosts" class="form-control text-right" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Bornage
+                        </div>
+                        <div class="input-group-sm col-4">
+                            <input asp-for="InvoiceHeader.BoundaryCosts" class="form-control text-right" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Commentaire
+                        </div>
+                        <div class="input-group-sm col-6">
+                            <textarea asp-for="InvoiceHeader.Comment" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group-sm col-6 pt-4">
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Apporteur
+                        </div>
+                        <div class="input-group-sm col-6">
+                            @Html.DropDownListFor(m => m.InvoiceHeader.BusinessPartnerId, Model.BusinessPartnerList, "Sélectionnez ...",
+                                            new { @class = "form-control", @id = "ddlBusinessPartners" })
+                        </div>
+                    </div>
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-4">
+                            Commission
+                        </div>
+                        <div class="input-group col ml-n2">
+                            <div class="input-group-sm col-4">
+                                @Html.DropDownListFor(m => m.InvoiceHeader.CommissionType, Model.CommissionTypeList, "Sélectionnez ...",
+                               new { @class = "form-control", @id = "ddlCommissionTypes" })
+                            </div>
+                            <div class="input-group-sm col-5 ml-n4">
+                                <input asp-for="InvoiceHeader.CommissionUnitValue" id="txtCommissionUnitValue" class="form-control text-right" asp-format="{0:N0}" />
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.InvoiceHeader.IsNew())
+                    {
+                        <hr />
+                        <div class="form-group row mt-n2">
+                            <div class="input-group-sm col-4">
+                                Parcelle
+                            </div>
+                            <div class="input-group-sm col-4">
+                                @Html.DropDownListFor(m => m.InvoiceDetail.ParcelId, Model.ParcelList, "Sélectionnez ...",
+                               new { @class = "form-control", @id = "ddlParcels" })
+                            </div>
+                        </div>
+                        <div class="form-group row mt-n2">
+                            <div class="input-group-sm col-4">
+                                Superficie
+                            </div>
+                            <div class="input-group-sm col-4">
+                                <input id="txtSurface" asp-for="InvoiceDetail.Surface" class="form-control text-right" asp-format="{0:N0}" />
+                            </div>
+                        </div>
+                        <div class="form-group row mt-n2">
+                            <div class="input-group-sm col-4">
+                                Prix du m²
+                            </div>
+                            <div class="input-group-sm col-4">
+                                <input id="txtUnitPrice" asp-for="InvoiceDetail.UnitPrice" class="form-control text-right" asp-format="{0:N0}" />
+                            </div>
+                        </div>
+                        <div class="form-group row mt-n2">
+                            <div class="input-group-sm col-4">
+                                Total
+                            </div>
+                            <div class="input-group-sm col-4">
+                                <input id="txtTotal" asp-for="InvoiceDetail.Total" class="form-control text-right" asp-format="{0:N0}" disabled />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

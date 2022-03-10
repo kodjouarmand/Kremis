@@ -1,0 +1,166 @@
+﻿@model ParcelViewModel
+
+<form method="post">
+    <input type="hidden" asp-for="Parcel.Id" />
+    <div class="row">
+        <div class="input-group-sm col-6 pt-4">
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    N° d'identification
+                </div>
+                <div class="input-group-sm col-4">
+                    <input asp-for="Parcel.Number" class="form-control font-weight-bold" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Statut
+                </div>
+                @if (Model.Parcel.Status == EnumHelper.ToString(StatusEnum.Unvailable))
+                {
+                    <div class="input-group-sm col-4">
+                        <input asp-for="Parcel.Status" class="form-control bg-gradient text-white font-weight-bold" style="background-color:red" disabled />
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col-4">
+                        <input asp-for="Parcel.Status" class="form-control bg-gradient text-white font-weight-bold" style="background-color:green" disabled />
+                    </div>
+                }
+            </div>
+            @if (Model.Parcel.LandTitle != null)
+            {
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        N° du titre foncier
+                    </div>
+                    <div class="input-group-sm col-6">
+                        <input asp-for="Parcel.LandTitle.DisplayText" class="form-control" disabled />
+                    </div>
+                </div>
+            }
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Localité
+                </div>
+                <div class="input-group-sm col-6">
+                    <input asp-for="Parcel.Locality.Name" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    N° de bloc
+                </div>
+                <div class="input-group-sm col-4">
+                    <input asp-for="Parcel.BlocNumber" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Prix du m²
+                </div>
+                <div class="input-group-sm col-4">
+                    <input asp-for="Parcel.UnitPrice" id="txtUnitPrice" class="form-control text-right" asp-format="{0:N0}" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Prix minimum autorisé
+                </div>
+                <div class="input-group-sm col-4">
+                    <input asp-for="Parcel.MinimumUnitPrice" id="txtMinimumUnitPrice" class="form-control text-right" asp-format="{0:N0}" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Superficie (en m²)
+                </div>
+                <div class="input-group-sm col-4">
+                    <input asp-for="Parcel.Surface" class="form-control text-right" asp-format="{0:N0}" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Type de terrain
+                </div>
+                <div class="input-group-sm col-4">
+                    <input asp-for="Parcel.LandType" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Type de route
+                </div>
+                <div class="input-group-sm col-4">
+                    <input asp-for="Parcel.RoadType" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    Répérage de la zone
+                </div>
+                <div class="input-group-sm col-4">
+                    <input asp-for="Parcel.AreaMarking" class="form-control" disabled />
+                </div>
+            </div>            
+        </div>
+        <div class="input-group-sm col-6 pt-4">
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-5">
+                    Dossier technique disponible ?
+                </div>
+                <div class="input-group-sm col-3">
+                    <input asp-for="Parcel.HasTechnicalFile" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-5">
+                    Eau disponible ?
+                </div>
+                <div class="input-group-sm col-3">
+                    <input asp-for="Parcel.HasWater" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-5">
+                    Electricité disponible ?
+                </div>
+                <div class="input-group-sm col-3">
+                    <input asp-for="Parcel.HasElectrilocality" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-5">
+                    Images disponible ?
+                </div>
+                <div class="input-group-sm col-3">
+                    <input asp-for="Parcel.HasImages" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-5">
+                    Vidéos disponible ?
+                </div>
+                <div class="input-group-sm col-3">
+                    <input asp-for="Parcel.HasVideos" class="form-control" disabled />
+                </div>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(Model.Parcel.Description))
+            {
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-5">
+                        Description/Commentaire
+                    </div>
+                    <div class="input-group-sm col-6">
+                        <textarea asp-for="Parcel.Description" class="form-control" disabled></textarea>
+                    </div>
+                </div>
+            }
+            <hr />
+            <div id="documents-view">
+                @await Html.PartialAsync("_Documents", Model)
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,154 @@
+﻿@model InvoicePaymentViewModel
+
+@{
+    ViewData["Title"] = "Ajoutd'un règlement de facture";
+    if (!Model.InvoicePayment.IsNew())
+    {
+        ViewData["Title"] = "Modification d'un règlement de facture";
+    }
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">&nbsp;@ViewData["Title"]</h1>
+    </div>
+    <hr />
+    <div class="form-group row p-2">
+        <div class="input-group-sm col-3">
+            <div class="row">
+                @if (!Model.InvoicePayment.IsNew())
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model.InvoicePayment.Id">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                @if (Model.ReturnToDetailView)
+                {
+                    <div class="input-group-sm col">
+                        <a asp-action="Summary" asp-route-id="@Model.InvoicePayment.Id" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <a asp-controller="InvoicePayment" asp-action="Index" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="border rounded bg-gradient-light">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!Model.InvoicePayment.IsNew())
+            {
+                <input type="hidden" asp-for="InvoicePayment.Id" />
+                <input type="hidden" asp-for="InvoicePayment.InvoiceHeaderId" />
+                <input type="hidden" asp-for="ReturnToDetailView" />
+            }
+            <div class="input-group-sm col-7 pt-4">
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Date du règlement
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="InvoicePayment.Date" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Facture
+                    </div>
+                    @if (!Model.InvoicePayment.IsNew())
+                    {
+                        <div class="input-group-sm col-4">
+                            <input asp-for="InvoicePayment.InvoiceHeader.DisplayText" class="form-control" disabled />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="input-group-sm col-4">
+                            @Html.DropDownListFor(m => m.InvoicePayment.InvoiceHeaderId, Model.InvoiceHeaderList, "Sélectionnez ...",
+                           new { @class = "form-control", @id = "ddlInvoiceHeaders" })
+                        </div>
+                    }
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Client
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="InvoicePayment.InvoiceHeader.Customer.Name" id="txtInvoiceHeaderCustomerName" class="form-control font-weight-bold" disabled />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Net à payer
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="InvoicePayment.InvoiceHeader.NetAmountToPay" id="txtInvoiceHeaderNetAmountToPay" class="form-control text-right font-weight-bold" asp-format="{0:N0}" disabled />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Avancé
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="InvoicePayment.InvoiceHeader.AdvancedAmount" id="txtInvoiceHeaderAdvancedAmount" class="form-control text-right font-weight-bold" asp-format="{0:N0}" disabled />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Reste à payer
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="InvoicePayment.InvoiceHeader.RemainingAmountToPay" id="txtInvoiceHeaderRemainingAmountToPay" class="form-control text-right font-weight-bold" asp-format="{0:N0}" disabled />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Montant du règlement
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="InvoicePayment.AmountPaid" id="txtAmountPaid" class="form-control text-right" />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Mode de règlement
+                    </div>
+                    <div class="input-group-sm col-4">
+                        @Html.DropDownListFor(m => m.InvoicePayment.PaymentModeId, Model.PaymentModeList, "Sélectionnez ...",
+                       new { @class = "form-control", @id = "ddlPaymentModes" })
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4" id="divTransactionNumberLabel">
+                        N° de la transaction
+                    </div>
+                    <div class="input-group-sm col-4" id="divTransactionNumberText">
+                        <input asp-for="InvoicePayment.TransactionNumber" class="form-control text-capitalize" id="txtTransactionNumber"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/invoicePayment.js"></script>
+}

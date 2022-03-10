@@ -1,0 +1,42 @@
+﻿@model BusinessPartnerViewModel
+
+<form method="post">
+    <input type="hidden" asp-for="BusinessPartner.Id" />
+    <div class="input-group-sm col-6 pt-4">
+        <div class="form-group row mt-n2">
+            <div class="input-group-sm col-3">
+                Référence
+            </div>
+            <div class="input-group-sm col-5">
+                <input asp-for="BusinessPartner.Reference" class="form-control" disabled />
+            </div>
+        </div>
+        <div class="form-group row mt-n2">
+            <div class="input-group-sm col-3">
+                Nom
+            </div>
+            <div class="input-group-sm col-5">
+                <input asp-for="BusinessPartner.Name" class="form-control" disabled />
+            </div>
+        </div>
+        <div class="form-group row mt-n2">
+            <div class="input-group-sm col-3">
+                N° de téléphone
+            </div>
+            <div class="input-group-sm col-5">
+                <input asp-for="BusinessPartner.PhoneNumber" class="form-control" disabled />
+            </div>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.BusinessPartner.Comment))
+        {
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-3">
+                    Commentaire
+                </div>
+                <div class="input-group-sm col-5">
+                    <textarea asp-for="BusinessPartner.Comment" class="form-control" disabled></textarea>
+                </div>
+            </div>
+        }        
+    </div>
+</form>

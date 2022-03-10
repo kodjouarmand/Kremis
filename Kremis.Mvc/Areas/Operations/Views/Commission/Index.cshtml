@@ -1,0 +1,16 @@
+﻿@model PagedResult<InvoiceHeaderDto>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Liste des commissions";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
+    </div>
+
+    <div id="parent-view" class="p-3 border rounded bg-white bg-gradient">
+        @await Html.PartialAsync("_List", Model)
+    </div>
+</div>

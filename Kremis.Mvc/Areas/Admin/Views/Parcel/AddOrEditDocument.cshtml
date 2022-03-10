@@ -1,0 +1,86 @@
+﻿@model ParcelDocumentViewModel
+
+@{
+    Layout = null;
+}
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="input-group-sm col-5 mx-n4">
+            <div class="row">
+                @if (!Model.ParcelDocument.IsNew())
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model.ParcelDocument.Id">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                <div class="input-group-sm col">
+                    <a asp-controller="Parcel" asp-action="Summary" asp-route-id="@Model.ParcelDocument.ParcelId" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                        <partial name="_IconReturn" />&nbsp;Quitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border rounded bg-gradient-light mx-n4 p-2">
+        <form asp-action="AddOrEditDocument" asp-route-id="@Model.ParcelDocument.Id" enctype="multipart/form-data" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!Model.ParcelDocument.IsNew())
+            {
+                <input type="hidden" asp-for="ParcelDocument.Id" />
+                <input type="hidden" asp-for="ParcelDocument.DocumentUrl" />
+            }
+            <input type="hidden" asp-for="ParcelDocument.ParcelId" />
+            <div class="input-group-sm col">
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Parcelle
+                    </div>
+                    <div class="input-group-sm col-8">
+                        <input asp-for="ParcelDocument.Parcel.DisplayText" class="form-control" disabled />
+                    </div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.ParcelDocument.DocumentUrl))
+                {
+                    <div class="form-group row mt-n2">
+                        <div class="input-group-sm col-3">
+                            Nom du document
+                        </div>
+                        <div class="input-group-sm col-8">
+                            <input asp-for="ParcelDocument.DocumentUrl" class="form-control" disabled />
+                        </div>
+                    </div>
+                }
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Type de document
+                    </div>
+                    <div class="input-group-sm col-8">
+                        @Html.DropDownListFor(m => m.ParcelDocument.DocumentTypeId, Model.DocumentTypeList, "Sélectionnez ...",
+                       new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Charger le document
+                    </div>
+                    <div class="input-group col-8">
+                        <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

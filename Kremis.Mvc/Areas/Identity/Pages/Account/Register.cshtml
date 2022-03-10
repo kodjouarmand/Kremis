@@ -1,0 +1,93 @@
+﻿@page
+@model RegisterModel
+@using Kremis.Utility.Helpers
+@{
+    ViewData["Title"] = "Ajout d'un nouvel utilisateur";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">&nbsp;@ViewData["Title"]</h1>
+    </div>
+    <div class="p-3 border rounded bg-gradient-light col-5">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    <label asp-for="Input.Name"></label>
+                </div>
+                <div class="input-group-sm col-6">
+                    <input asp-for="Input.Name" class="form-control" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    <label asp-for="Input.UserName"></label>
+                </div>
+                <div class="input-group-sm col-6">
+                    <input asp-for="Input.UserName" class="form-control" />
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    <label asp-for="Input.Password"></label>
+                </div>
+                <div class="input-group-sm col-6">
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    <label asp-for="Input.ConfirmPassword"></label>
+                </div>
+                <div class="input-group-sm col-6">
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    <label asp-for="Input.Email"></label>
+                </div>
+                <div class="input-group-sm col-6">
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mt-n2">
+                <div class="input-group-sm col-4">
+                    <label asp-for="Input.Role"></label>
+                </div>
+                <div class="input-group-sm col-6">
+                    @Html.DropDownListFor(m => m.Input.Role, Model.Input.RoleList,
+                    "-Please select a role", new { @class = "form-control" })
+                    <span asp-validation-for="Input.Role" class="text-danger"></span>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group row mt-n2 pt-2">
+                <div class="input-group-sm col-10">
+                    <div class="row">
+                        <div class="input-group-sm col">
+                            <button type="submit" class="btn btn-sm btn-success form-control">
+                                <partial name="_IconSave" />&nbsp; Enregistrer
+                            </button>
+                        </div>
+                        <div class="input-group-sm col">
+                            <a asp-area="Admin" asp-controller="User" asp-action="Index" class="btn btn-sm btn-outline-danger form-control">
+                                <partial name="_IconReturn" />&nbsp;Quitter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

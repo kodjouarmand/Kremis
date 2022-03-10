@@ -1,0 +1,10 @@
+﻿@model int
+    <div class="row">
+        <div class="input-group-sm col">
+            <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model"><partial name="_IconSave" />&nbsp;Enregistrer</button>
+        </div>
+
+        <div class="input-group-sm col">
+            <a asp-action="Index" class="btn btn-sm btn-outline-danger form-control"><partial name="_IconReturn" />&nbsp;Quitter</a>
+        </div>
+    </div>

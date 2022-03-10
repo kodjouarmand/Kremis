@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var currentUser = ViewBag.CurrentUser;
+    ViewData["Title"] = "Liste des utilisateurs";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
+        <a class="btn btn-sm btn-success" style="width:12%;"
+           asp-area="Identity" asp-page="/Account/Register" asp-route-currentUserId="@currentUser.Id">
+            <partial name="_IconCreate" /> Ajouter
+        </a>
+    </div>
+
+    <div class="p-3 border rounded bg-gradient-gradient">
+        <table id="tblData" class="table table-striped table-bordered table-sm bg-white text-dark" style="width:100%">
+            <thead>
+                <tr class="bg-gradient-primary text-white">
+                    <th>Full name</th>
+                    <th>Login</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th class="text-center" style="width:15%">Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/user.js"></script>
+}

@@ -1,0 +1,31 @@
+﻿@model LocalityViewModel
+
+<form method="post">
+    <input type="hidden" asp-for="Locality.Id" />
+    <div class="input-group-sm col-6 pt-4">
+        <div class="form-group row mt-n2">
+            <div class="input-group-sm col-3">
+                Nom
+            </div>
+            <div class="input-group-sm col-5">
+                <input asp-for="Locality.Name" class="form-control" disabled />
+            </div>
+        </div>
+        <div class="form-group row mt-n2">
+            <div class="input-group-sm col-3">
+                Ville
+            </div>
+            <div class="input-group-sm col-5">
+                <input asp-for="Locality.City.Name" class="form-control" disabled />
+            </div>
+        </div>
+        <div class="form-group row mt-n2">
+            <div class="input-group-sm col-3">
+                Description
+            </div>
+            <div class="input-group-sm col-5">
+                <textarea asp-for="Locality.Description" class="form-control" disabled></textarea>
+            </div>
+        </div>        
+    </div>
+</form>

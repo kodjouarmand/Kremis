@@ -1,0 +1,77 @@
+﻿@model InvoiceHeaderViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] ="Visualisation d'une facture";
+}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">&nbsp;@ViewData["Title"]</h1>
+    </div>
+    <hr />
+    <div class="form-group row p-2">
+        <div class="input-group-sm col-6">
+            <div class="row">
+                <div class="input-group-sm col">
+                    @if (Model.InvoiceHeader.Status == EnumHelper.ToString(StatusEnum.Unpaid))
+                    {
+                        <a href="/Operations/InvoiceHeader/AddOrEdit/@Model.InvoiceHeader.Id?returnToHeaderView=true" class="btn btn-sm btn-success form-control" style="cursor:pointer">
+                            <partial name="_IconEdit" />&nbsp; Modifier
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-sm btn-secondary form-control" style="cursor:pointer">
+                            <partial name="_IconEdit" />&nbsp; Modifier
+                        </a>
+                    }
+                </div>
+                <div class="input-group-sm col">
+                    @if (Model.InvoiceHeader.Status == EnumHelper.ToString(StatusEnum.Unpaid))
+                    {
+                        <a onclick="showInPopup('@Url.Action("Cancel", "InvoiceHeader", new { id = @Model.InvoiceHeader.Id, returnToHeaderView = true }, Context.Request.Scheme)','Annulation d\'une facture')" class="btn btn-sm btn-danger form-control" style="cursor:pointer">
+                            <partial name="_IconCancel" />&nbsp; Annuler
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-sm btn-secondary form-control" style="cursor:pointer">
+                            <partial name="_IconCancel" />&nbsp; Annuler
+                        </a>
+                    }
+                </div>
+                <div class="input-group-sm col">
+                    <a asp-action="Print" asp-route-id="@Model.InvoiceHeader.Id" class="btn btn-sm btn-info form-control">
+                        <partial name="_IconPrint" />&nbsp;Imprimer
+                    </a>
+                </div>
+                @if (Model.ReturnToViewCommission == true)
+                {
+                    <div class="input-group-sm col">
+                        <a asp-controller="Commission" asp-action="Index" class="btn btn-sm btn-outline-danger form-control">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <a asp-action="Index" class="btn btn-sm btn-outline-danger form-control">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div id="parent-view" class="p-3 border rounded bg-white bg-gradient">
+        @await Html.PartialAsync("_Header", Model)
+    </div>
+    <div id="modal-view">
+        @await Html.PartialAsync("_Modal", Model)
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/invoiceHeader.js"></script>
+}
+

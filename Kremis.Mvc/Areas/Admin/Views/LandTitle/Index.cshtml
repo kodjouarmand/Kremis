@@ -1,0 +1,26 @@
+﻿@model PagedResult<LandTitleDto>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Liste des titres fonciers";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
+        <a onclick="showInPopup('@Url.Action("AddOrEdit","LandTitle",new {id=0},Context.Request.Scheme)','Ajout d\'un titre foncier')" class="btn btn-sm btn-success text-white d-block" style="cursor: pointer; width: 12%">
+            <partial name="_IconCreate" /> Ajouter
+        </a>
+    </div>
+
+    <div id="parent-view" class="p-3 border rounded bg-white bg-gradient">
+        @await Html.PartialAsync("_List", Model)
+    </div>
+    <div id="modal-view">
+        @await Html.PartialAsync("_Modal", Model)
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/landTitle.js"></script>
+}

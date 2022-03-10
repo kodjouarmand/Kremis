@@ -1,0 +1,40 @@
+﻿@model InvoiceHeaderViewModel
+
+<div class="d-sm-flex align-items-center justify-content-between bg-gradient-primary">
+    <h5 class="h5 mb-0 text-white">Liste des lots achetés</h5>
+    @if (Model.InvoiceHeader.Status == EnumHelper.ToString(StatusEnum.Unpaid))
+    {
+        <a onclick="showInPopup('@Url.Action("AddOrEditDetail", "InvoiceHeader", new { id=0, invoiceHeaderId=@Model.InvoiceHeader.Id }, Context.Request.Scheme)','Ajout d\'un lot vendue')" class="btn btn-sm btn-success text-white" style="cursor:pointer">
+            <partial name="_IconCreate" />
+        </a>
+    }
+</div>
+<ul class="list-group mb-2">
+    @foreach (var invoiceDetail in Model.InvoiceDetails)
+    {
+        <li class="list-group-item d-flex justify-content-between">
+            <div>
+                <h6 class="my-0 text-black">
+                    <small class="font-weight-bold">Lot N° @invoiceDetail.Parcel.DisplayText</small>
+                </h6>
+                <small class="text-muted">
+                    @invoiceDetail.Surface.GetValueOrDefault().ToString("N0") m² -
+                    @invoiceDetail.UnitPrice.GetValueOrDefault().ToString("N0") / m² -
+                    @invoiceDetail.Total.GetValueOrDefault().ToString("N0") F.CFA
+                </small>
+            </div>
+            @if (Model.InvoiceHeader.Status == EnumHelper.ToString(StatusEnum.Unpaid))
+            {
+                <span>
+                    <a onclick="showInPopup('@Url.Action("AddOrEditDetail","InvoiceHeader",new {id=invoiceDetail.Id, invoiceHeaderId=@Model.InvoiceHeader.Id},Context.Request.Scheme)','Modification d\'un lot vendue')" class="btn btn-sm btn-success text-white" style="cursor:pointer">
+                        <partial name="_IconEdit" />
+                    </a>
+
+                    <a onclick=DeleteInvoiceDetail("/Operations/InvoiceHeader/DeleteInvoiceDetail/@invoiceDetail.Id") class="btn btn-sm btn-danger text-white" style="cursor:pointer">
+                        <partial name="_IconDelete" />
+                    </a>
+                </span>
+            }
+        </li>
+    }
+</ul>

@@ -1,0 +1,85 @@
+﻿@model LocalityViewModel
+
+@{
+    Layout = null;
+}
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="input-group-sm col-5 mx-n4">
+            <div class="row">
+                @if (!Model.Locality.IsNew())
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model.Locality.Id">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                @if (Model.ReturnToDetailView)
+                {
+                    <div class="input-group-sm col">
+                        <a asp-controller="Locality" asp-action="Summary" asp-route-id="@Model.Locality.Id" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <a asp-controller="Locality" asp-action="Index" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="border rounded bg-gradient-light mx-n4 p-2">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.Locality.Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!Model.Locality.IsNew())
+            {
+                <input type="hidden" asp-for="Locality.Id" />
+                <input type="hidden" asp-for="ReturnToDetailView" />
+            }
+            <div class="input-group-sm col p-2">
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Nom
+                    </div>
+                    <div class="input-group-sm col-8">
+                        <input asp-for="Locality.Name" class="form-control text-capitalize" />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Ville
+                    </div>
+                    <div class="input-group-sm col-8">
+                        @Html.DropDownListFor(m => m.Locality.CityId, Model.CityList, "Sélectionnez ...",
+                       new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Description
+                    </div>
+                    <div class="input-group-sm col-8">
+                        <textarea asp-for="Locality.Description" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

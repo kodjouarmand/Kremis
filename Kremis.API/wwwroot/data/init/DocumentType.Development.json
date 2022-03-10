@@ -1,0 +1,53 @@
+[
+   {
+      "Name": "Titre foncier"
+   },
+   {
+      "Name": "Dossier technique"
+   }
+   ,
+   {
+      "Name": "Plan de lotissement"
+   },
+   {
+      "Name": "Plan de masse"
+   },
+   {
+      "Name": "Certificat de propriété"
+   },
+   {
+      "Name": "CNI"
+   },
+   {
+      "Name": "Passeport"
+   },
+   {
+      "Name": "Permis de conduire"
+   },
+   {
+      "Name": "Carte consulaire"
+   },
+   {
+      "Name": "Titre de séjour"
+   },
+   {
+      "Name": "Carte de séjour"
+   },
+   {
+      "Name": "Procuration"
+   },
+   {
+      "Name": "Procès verbale de morcellement"
+   },
+   {
+      "Name": "Acte de vente"
+   }
+   ,
+   {
+      "Name": "Fiche technique d'information"
+   },
+   {
+      "Name": "Autres"
+   }
+]
+

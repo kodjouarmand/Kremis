@@ -1,0 +1,35 @@
+﻿@model CustomerViewModel
+
+<h5 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-info">Documents liés au client</span>
+</h5>
+<ul class="list-group mb-3">
+    @foreach (var document in Model.CustomerDocuments)
+    {
+        <li class="list-group-item d-flex justify-content-between">
+            <div>
+                <h6 class="my-0 text-black">
+                    <small>
+                        <a href="/Admin/Customer/DiplayDocument?documentUrl=@document.DocumentUrl">
+                            @document.DocumentUrl
+                        </a>
+                    </small>
+                </h6>
+                <small class="text-muted">@document.DocumentType.Name</small>
+            </div>
+            <span>
+                <a onclick="showInPopup('@Url.Action("AddOrEditDocument","Customer",new {id=@document.Id, customerId=@Model.Customer.Id},Context.Request.Scheme)','Modification d\'un document de client')" class="btn btn-sm btn-success text-white" style="cursor:pointer">
+                    <partial name="_IconEdit" />
+                </a>
+                <a onclick=DeleteDocument("/Admin/Customer/DeleteDocument/@document.Id") class="btn btn-sm btn-danger text-white" style="cursor:pointer">
+                    <partial name="_IconDelete" />
+                </a>
+            </span>
+        </li>
+    }
+    <li class="list-group-item d-flex justify-content-between bg-light">
+        <a onclick="showInPopup('@Url.Action("AddOrEditDocument","Customer",new {id=0, customerId=@Model.Customer.Id},Context.Request.Scheme)','Ajout d\'un document de client')" class="btn btn-sm btn-success text-white" style="cursor:pointer">
+            <partial name="_IconCreate" />
+        </a>
+    </li>
+</ul>

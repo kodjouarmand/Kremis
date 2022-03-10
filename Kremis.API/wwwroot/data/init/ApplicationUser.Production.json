@@ -1,0 +1,22 @@
+[
+  {
+	"Id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+	"UserName": "admin",
+	"NormalizedUserName": "admin",
+	"Name": "Administrator",
+	"Email": "kokaar.admin@gmail.com",
+	"NormalizedEmail": "kokaar.admin@gmail.com",
+	"EmailConfirmed": true,
+	"PhoneNumberConfirmed": true
+  },
+  {
+	"Id": "936DA01F-9ABD-4d9d-80C7-02AF85C822A8",
+	"UserName": "user",
+	"NormalizedUserName": "user",
+	"Name": "Simple User",
+	"Email": "kokaar.user@gmail.com",
+	"NormalizedEmail": "kokaar.user@gmail.com",
+	"EmailConfirmed": true,
+	"PhoneNumberConfirmed": true
+  }
+]

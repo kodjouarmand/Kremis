@@ -1,0 +1,48 @@
+﻿@model CommissionPaymentViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] ="Visualisation d'un paiement de commission";
+}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">&nbsp;@ViewData["Title"]</h1>
+    </div>
+    <hr />
+    <div class="form-group row p-2">
+        <div class="input-group-sm col-6">
+            <div class="row">
+                <div class="input-group-sm col">
+                    <a href="/Operations/CommissionPayment/AddOrEdit/@Model.CommissionPayment.Id?returnToDetailView=true" class="btn btn-sm btn-success form-control" style="cursor:pointer">
+                        <partial name="_IconEdit" />&nbsp; Modifier
+                    </a>
+                </div>
+                <div class="input-group-sm col">
+                    <a onclick="showInPopup('@Url.Action("Cancel","CommissionPayment",new {id=@Model.CommissionPayment.Id, returnToDetailView = true},Context.Request.Scheme)','Annulation d\'un paiement de commission')" class="btn btn-sm btn-danger form-control" style="cursor:pointer">
+                        <partial name="_IconCancel" />&nbsp; Annuler
+                    </a>
+                </div>
+                <div class="input-group-sm col">
+                    <a asp-action="Print" asp-route-id="@Model.CommissionPayment.Id" class="btn btn-sm btn-info form-control">
+                        <partial name="_IconPrint" />&nbsp;Imprimer
+                    </a>
+                </div>
+                <div class="input-group-sm col">
+                    <a asp-action="Index" class="btn btn-sm btn-outline-danger form-control">
+                        <partial name="_IconReturn" />&nbsp;Quitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="parent-view" class="p-3 border rounded bg-white bg-gradient">
+        @await Html.PartialAsync("_Detail", Model)
+    </div>
+    <div id="modal-view">
+        @await Html.PartialAsync("_Modal", Model)
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/commissionPayment.js"></script>
+}

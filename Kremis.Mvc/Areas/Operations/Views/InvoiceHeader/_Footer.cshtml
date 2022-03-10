@@ -1,0 +1,100 @@
+﻿@model InvoiceHeaderViewModel
+
+<div class="form-group row pt-1 border-1">
+    <div class="input-group-sm col-7">
+        Montant total de la vente
+    </div>
+    <div class="input-group-sm col-4">
+        <input asp-for="InvoiceHeader.TotalSaleAmount" class="form-control text-right bg-gradient font-weight-bold" style="background-color:silver" asp-format="{0:N0}" disabled />
+    </div>
+</div>
+<div class="form-group row mt-n2">
+    <div class="input-group-sm col-7">
+        Frais de morcellement
+    </div>
+    <div class="input-group-sm col-4">
+        <input asp-for="InvoiceHeader.ParcellingCosts" class="form-control text-right" asp-format="{0:N0}" disabled />
+    </div>
+</div>
+<div class="form-group row mt-n2">
+    <div class="input-group-sm col-7">
+        Frais de dossier technique
+    </div>
+    <div class="input-group-sm col-4">
+        <input asp-for="InvoiceHeader.TechnicalFileCosts" class="form-control text-right" asp-format="{0:N0}" disabled />
+    </div>
+</div>
+<div class="form-group row mt-n2">
+    <div class="input-group-sm col-7">
+        Frais de bornage
+    </div>
+    <div class="input-group-sm col-4">
+        <input asp-for="InvoiceHeader.BoundaryCosts" class="form-control text-right" asp-format="{0:N0}" disabled />
+    </div>
+</div>
+<hr />
+<div class="form-group row mt-n2">
+    <div class="input-group-sm col-7">
+        Montant net à payer
+    </div>
+    <div class="input-group-sm col-4">
+        <input asp-for="InvoiceHeader.NetAmountToPay" class="form-control text-right bg-gradient text-white font-weight-bold" asp-format="{0:N0}" style="background-color: Highlight" disabled />
+    </div>
+</div>
+@if (Model.InvoiceHeader.Status == EnumHelper.ToString(Kremis.Utility.Enum.StatusEnum.Unpaid))
+{
+    <div class="form-group row mt-n2">
+        <div class="input-group-sm col-7">
+            Montant avancé
+        </div>
+        <div class="input-group-sm col-4">
+            <input asp-for="InvoiceHeader.AdvancedAmount" class="form-control text-right bg-gradient bg-light text-danger" asp-format="{0:N0}" disabled />
+        </div>
+    </div>
+    <div class="form-group row mt-n2">
+        <div class="input-group-sm col-7">
+            Montant restant à payer
+        </div>
+        <div class="input-group-sm col-4">
+            <input asp-for="InvoiceHeader.RemainingAmountToPay" class="form-control text-right bg-gradient bg-light text-danger font-weight-bold" asp-format="{0:N0}" disabled />
+        </div>
+    </div>
+}
+else if (Model.InvoiceHeader.Status == EnumHelper.ToString(Kremis.Utility.Enum.StatusEnum.Paid))
+{
+    <div class="form-group row mt-n2">
+        <div class="input-group-sm col-7">
+            Montant avancé
+        </div>
+        <div class="input-group-sm col-4">
+            <input asp-for="InvoiceHeader.AdvancedAmount" class="form-control text-right bg-gradient bg-light text-success font-weight-bold" asp-format="{0:N0}" disabled />
+        </div>
+    </div>
+    <div class="form-group row mt-n2">
+        <div class="input-group-sm col-7">
+            Montant restant à payer
+        </div>
+        <div class="input-group-sm col-4">
+            <input asp-for="InvoiceHeader.RemainingAmountToPay" class="form-control text-right bg-gradient bg-light text-success font-weight-bold" asp-format="{0:N0}" disabled />
+        </div>
+    </div>
+}
+else
+{
+    <div class="form-group row mt-n2">
+        <div class="input-group-sm col-7">
+            Montant avancé
+        </div>
+        <div class="input-group-sm col-4">
+            <input asp-for="InvoiceHeader.AdvancedAmount" class="form-control text-right bg-gradient bg-light font-weight-bold" asp-format="{0:N0}" style="color:lightseagreen" disabled />
+        </div>
+    </div>
+    <div class="form-group row mt-n2">
+        <div class="input-group-sm col-7">
+            Montant restant à payer
+        </div>
+        <div class="input-group-sm col-4">
+            <input asp-for="InvoiceHeader.RemainingAmountToPay" class="form-control text-right bg-gradient bg-light text-danger font-weight-bold" asp-format="{0:N0}" disabled />
+        </div>
+    </div>
+}

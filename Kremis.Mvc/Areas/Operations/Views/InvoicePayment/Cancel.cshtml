@@ -1,0 +1,42 @@
+﻿@model InvoicePaymentViewModel
+
+@{
+    Layout = null;
+}
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="input-group-sm col-4 mx-n4">
+            <div class="row">
+                <div class="input-group-sm col">
+                    <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model.InvoicePayment.Id">
+                        <partial name="_IconSave" />&nbsp;Annuler
+                    </button>
+                </div>
+                <div class="input-group-sm col">
+                    <a asp-action="Summary" asp-route-id="@Model.InvoicePayment.Id" class="btn btn-sm btn-outline-danger form-control">
+                        <partial name="_IconReturn" />&nbsp;Quitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border rounded bg-gradient-light mx-n4 p-2">
+        <form asp-action="Cancel" asp-route-id="@Model.InvoicePayment.Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="InvoicePayment.Id" />
+            <div class="input-group-sm col p-2">
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Motif de l'annulation
+                    </div>
+                    <div class="input-group-sm col-7">
+                        <textarea asp-for="InvoicePayment.CancelationReason" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

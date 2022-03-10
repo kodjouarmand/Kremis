@@ -1,0 +1,91 @@
+﻿@model InvoiceDetailViewModel
+
+@{
+    Layout = null;
+}
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="input-group-sm col-5 mx-n4">
+            <div class="row">
+                @if (!Model.InvoiceDetail.IsNew())
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model.InvoiceDetail.Id">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                <div class="input-group-sm col">
+                    <a asp-controller="InvoiceHeader" asp-action="Summary" asp-route-id="@Model.InvoiceDetail.InvoiceHeaderId" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                        <partial name="_IconReturn" />&nbsp;Quitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border rounded bg-gradient-light mx-n4 p-2">
+        <form asp-action="AddOrEditDetail" asp-route-id="@Model.InvoiceDetail.Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!Model.InvoiceDetail.IsNew())
+            {
+                <input type="hidden" asp-for="InvoiceDetail.Id" />
+                <input type="hidden" asp-for="InvoiceDetail.Total" />
+            }
+            <input type="hidden" asp-for="InvoiceDetail.InvoiceHeaderId" />
+            <div class="input-group-sm col p-2">
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Facture
+                    </div>
+                    <div class="input-group-sm col-3">
+                        <input asp-for="InvoiceDetail.InvoiceHeader.DisplayText" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Parcelle
+                    </div>
+                    <div class="input-group-sm col-3">
+                        @Html.DropDownListFor(m => m.InvoiceDetail.ParcelId, Model.ParcelList, "Sélectionnez ...",
+                       new { @class = "form-control", @id = "ddlParcels" })
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Superficie (en m²)
+                    </div>
+                    <div class="input-group-sm col-3">
+                        <input id="txtSurface" asp-for="InvoiceDetail.Surface" class="form-control text-right" asp-format="{0:N0}" />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Prix du m²
+                    </div>
+                    <div class="input-group-sm col-3">
+                        <input id="txtUnitPrice" asp-for="InvoiceDetail.UnitPrice" class="form-control text-right" asp-format="{0:N0}" />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-3">
+                        Total
+                    </div>
+                    <div class="input-group-sm col-3">
+                        <input id="txtTotal" asp-for="InvoiceDetail.Total" class="form-control text-right" asp-format="{0:N0}" disabled />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

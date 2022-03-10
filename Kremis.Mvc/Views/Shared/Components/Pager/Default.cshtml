@@ -1,0 +1,54 @@
+﻿@model PagedResultBase
+@{
+    var urlTemplate = Url.Action() + "?page={0}";
+    var request = ViewContext.HttpContext.Request;
+    foreach (var key in request.Query.Keys)
+    {
+        if (key == "page")
+        {
+            continue;
+        }
+
+        urlTemplate += "&" + key + "=" + request.Query[key];
+    }
+
+    var startIndex = Math.Max(Model.CurrentPage - 5, 1);
+    var finishIndex = Math.Min(Model.CurrentPage + 5, Model.PageCount);
+}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between">
+        <i class="small  m-0 p-0">Lignes @Model.FirstRowOnPage à @Model.LastRowOnPage sur @Model.RowCount</i>
+        @if (Model.PageCount > 1)
+        {
+            <ul class="pagination pull-right">
+                <li>
+                    <a href="@urlTemplate.Replace("{0}", "1")" class="btn btn-sm btn-info mr-n1 border-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                        </svg>
+                    </a>
+                </li>
+                @for (var i = startIndex; i <= finishIndex; i++)
+                {
+                    @if (i == Model.CurrentPage)
+                    {
+
+                        <li><span class="btn btn-sm btn-primary mr-n1 border-white">@i</span></li>
+                    }
+                    else
+                    {
+
+                        <li><a href="@urlTemplate.Replace("{0}", i.ToString())" class="btn btn-sm btn-info mr-n1 border-white">@i</a></li>
+                    }
+                }
+                <li>
+                    <a href="@urlTemplate.Replace("{0}", Model.PageCount.ToString())" class="btn btn-sm btn-info mr-n1 border-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        }
+    </div>
+</div>

@@ -1,0 +1,100 @@
+﻿@model PagedResult<InvoiceHeaderDto>
+
+<div>
+    <table id="tblData" class="table table-striped table-bordered table-sm bg-white text-dark" style="width:100%">
+        <thead>
+            <tr class="bg-gradient-primary text-white">
+                <th>N°</th>
+                <th>Nom du client</th>
+                <th>Date</th>
+                <th>Net à payer</th>
+                <th>Avance</th>
+                <th>Reste</th>
+                <th>Statut</th>
+                <th class="text-center" style="width:12%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Results)
+            {
+                <tr>
+                    <td>
+                        @item.Number
+                    </td>
+                    <td>
+                        @item.Customer.Name
+                    </td>
+                    <td>
+                        @item.Date.GetValueOrDefault().ToShortDateString()
+                    </td>
+                    <td class="text-right">
+                        @item.NetAmountToPay.GetValueOrDefault().ToString("N0")
+                    </td>
+                    <td class="text-right">
+                        @item.AdvancedAmount.GetValueOrDefault().ToString("N0")
+                    </td>
+                    <td class="text-right">
+                        @item.RemainingAmountToPay.GetValueOrDefault().ToString("N0")
+                    </td>
+                    <td>
+                        @if (item.AdvancedAmount == item.NetAmountToPay)
+                        {
+                            <div class="font-weight-bold" style="color:green">
+                                @item.Status
+                            </div>
+                        }
+                        else if (item.RemainingAmountToPay == item.NetAmountToPay)
+                        {
+                            <div class="font-weight-bold" style="color:red">
+                                @item.Status
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="font-weight-bold" style="color:lightseagreen">
+                                <i>@item.Status</i>
+                            </div>
+                        }
+                    </td>
+                    <td>
+
+                        <div class="text-center">
+                            <a href="/Operations/InvoiceHeader/Summary/@item.Id" class="btn btn-sm btn-info" style="cursor:pointer">
+                                <partial name="_IconView" />
+                            </a>
+                            @if (item.Status == EnumHelper.ToString(Kremis.Utility.Enum.StatusEnum.Unpaid))
+                            {
+                                <a href="/Operations/InvoiceHeader/AddOrEdit/@item.Id" class="btn btn-sm btn-success " style="cursor: pointer">
+                                    <partial name="_IconEdit" />
+                                </a>
+                                @if (IdentityHelper.IsSuperAdministrator(User))
+                                {
+                                    <a onclick=Delete("/Operations/InvoiceHeader/Delete/@item.Id") class="btn btn-sm btn-danger" style="cursor:pointer">
+                                        <partial name="_IconDelete" />
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-sm btn-light" style="cursor:pointer">
+                                        <partial name="_IconDelete" />
+                                    </a>
+                                }
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-light" style="cursor:pointer">
+                                    <partial name="_IconEdit" />
+                                </a>
+                                <a class="btn btn-sm btn-light" style="cursor:pointer">
+                                    <partial name="_IconDelete" />
+                                </a>
+                            }
+                        </div>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @(await Component.InvokeAsync<PagerViewComponent>(Model))
+</div>

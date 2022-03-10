@@ -1,0 +1,50 @@
+﻿@model ParcelViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] ="Visualisation d'un lot";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">&nbsp;@ViewData["Title"]</h1>
+    </div>
+    <hr />
+    <div class="form-group row p-2">
+        <div class="input-group-sm col-3">
+            <div class="row">
+                @if (Model.Parcel.Status == EnumHelper.ToString(StatusEnum.Unvailable))
+                {
+                    <div class="input-group-sm col">
+                        <a class="btn btn-sm btn-secondary form-control" style="cursor:pointer">
+                            <partial name="_IconEdit" />&nbsp; Modifier
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <a onclick="showInPopup('@Url.Action("AddOrEdit", "Parcel", new { id = @Model.Parcel.Id, returnToDetailView = true }, Context.Request.Scheme)','Modification d\'un titre foncier')" class="btn btn-sm btn-success form-control" style="cursor:pointer">
+                            <partial name="_IconEdit" />&nbsp; Modifier
+                        </a>
+                    </div>
+                }
+                <div class="input-group-sm col">
+                    <a asp-action="Index" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                        <partial name="_IconReturn" />&nbsp;Quitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="parent-view" class="p-3 border rounded bg-white bg-gradient">
+        @await Html.PartialAsync("_Detail", Model)
+    </div>
+    <div id="modal-view">
+        @await Html.PartialAsync("_Modal_xl", Model)
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/parcel.js"></script>
+}

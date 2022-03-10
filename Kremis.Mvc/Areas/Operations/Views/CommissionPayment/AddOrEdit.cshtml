@@ -1,0 +1,154 @@
+﻿@model CommissionPaymentViewModel
+
+@{
+    ViewData["Title"] = "Ajoutd'un paiement de facture";
+    if (!Model.CommissionPayment.IsNew())
+    {
+        ViewData["Title"] = "Modification d'un paiement de facture";
+    }
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">&nbsp;@ViewData["Title"]</h1>
+    </div>
+    <hr />
+    <div class="form-group row p-2">
+        <div class="input-group-sm col-3">
+            <div class="row">
+                @if (!Model.CommissionPayment.IsNew())
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control" asp-route-id="@Model.CommissionPayment.Id">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <button type="submit" class="btn btn-sm btn-success form-control">
+                            <partial name="_IconSave" />&nbsp;Enregistrer
+                        </button>
+                    </div>
+                }
+                @if (Model.ReturnToDetailView)
+                {
+                    <div class="input-group-sm col">
+                        <a asp-action="Summary" asp-route-id="@Model.CommissionPayment.Id" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group-sm col">
+                        <a asp-controller="CommissionPayment" asp-action="Index" class="btn btn-sm btn-outline-danger form-control ml-n3">
+                            <partial name="_IconReturn" />&nbsp;Quitter
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="border rounded bg-gradient-light">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!Model.CommissionPayment.IsNew())
+            {
+                <input type="hidden" asp-for="CommissionPayment.Id" />
+                <input type="hidden" asp-for="CommissionPayment.InvoiceHeaderId" />
+                <input type="hidden" asp-for="ReturnToDetailView" />
+            }
+            <div class="input-group-sm col-7 pt-4">
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Date du paiement
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="CommissionPayment.Date" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Facture
+                    </div>
+                    @if (!Model.CommissionPayment.IsNew())
+                    {
+                        <div class="input-group-sm col-4">
+                            <input asp-for="CommissionPayment.InvoiceHeader.DisplayText" class="form-control" disabled />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="input-group-sm col-4">
+                            @Html.DropDownListFor(m => m.CommissionPayment.InvoiceHeaderId, Model.InvoiceHeaderList, "Sélectionnez ...",
+                           new { @class = "form-control", @id = "ddlInvoiceHeaders" })
+                        </div>
+                    }
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Client
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="CommissionPayment.InvoiceHeader.BusinessPartner.Name" id="txtInvoiceHeaderBusinessPartnerName" class="form-control font-weight-bold" disabled />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Net à payer
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="CommissionPayment.InvoiceHeader.CommissionToPay" id="txtInvoiceHeaderCommissionToPay" class="form-control text-right font-weight-bold" asp-format="{0:N0}" disabled />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Avancé
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="CommissionPayment.InvoiceHeader.CommissionPaid" id="txtInvoiceHeaderCommissionPaid" class="form-control text-right font-weight-bold" asp-format="{0:N0}" disabled />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Reste à payer
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="CommissionPayment.InvoiceHeader.CommissionRemainingToPay" id="txtInvoiceHeaderCommissionRemainingToPay" class="form-control text-right font-weight-bold" asp-format="{0:N0}" disabled />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Montant du paiement
+                    </div>
+                    <div class="input-group-sm col-4">
+                        <input asp-for="CommissionPayment.AmountPaid" id="txtAmountPaid" class="form-control text-right" />
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4">
+                        Mode de paiement
+                    </div>
+                    <div class="input-group-sm col-4">
+                        @Html.DropDownListFor(m => m.CommissionPayment.PaymentModeId, Model.PaymentModeList, "Sélectionnez ...",
+                       new { @class = "form-control", @id = "ddlPaymentModes" })
+                    </div>
+                </div>
+                <div class="form-group row mt-n2">
+                    <div class="input-group-sm col-4" id="divTransactionNumberLabel">
+                        N° de la transaction
+                    </div>
+                    <div class="input-group-sm col-4" id="divTransactionNumberText">
+                        <input asp-for="CommissionPayment.TransactionNumber" class="form-control text-capitalize" id="txtTransactionNumber" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/commissionPayment.js"></script>
+}

@@ -1,0 +1,149 @@
+﻿@model InvoicePaymentViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutPrintView.cshtml";
+    ViewData["Title"] = "Reçu de règlement de facture";
+}
+<div class="form-group row p-2">
+    <div class="input-group-sm col">
+        <div class="row">
+            <div class="input-group-sm col">
+                <a onclick="javascript:window.print();" class="btn btn-sm btn-success form-control border-0">
+                    <partial name="_IconPrint" />
+                </a>
+            </div>
+            <div class="input-group-sm col ml-n3">
+                <a asp-controller="InvoicePayment" asp-action="Summary" asp-route-id="@Model.InvoicePayment.Id" class="btn btn-sm btn-danger form-control border-0">
+                    <partial name="_IconReturn" />
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid p-5">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">&nbsp;@ViewData["Title"]</h1>
+        <h6 class="text-black text-decoration-underline"><i>N° @Model.InvoicePayment.Number, du @Model.InvoicePayment.Date.GetValueOrDefault().ToShortDateString()</i></h6>
+    </div>
+    <div class="input-group-sm pt-4">
+        <div class="form-group row pt-2">
+            <div class="input-group-sm col-5">
+                Nom du client
+            </div>
+            <div class="input-group-sm col-7 w-auto font-weight-bold ml-n2">
+                @Model.InvoicePayment.InvoiceHeader.Customer.Name.ToUpper()
+            </div>
+        </div>
+        <div class="form-group row pt-2">
+            <div class="input-group-sm col-5">
+                Contact du client
+            </div>
+            <div class="input-group-sm col-7 w-auto ml-n2">
+                @Model.InvoicePayment.InvoiceHeader.Customer.PhoneNumber
+            </div>
+        </div>
+        <div class="form-group row pt-2">
+            <div class="input-group-sm col-5">
+                Montant réglé
+            </div>
+            <div class="input-group-sm col-5 w-auto font-weight-bold">
+                <div class="row">
+                    @Model.InvoicePayment.AmountPaid.GetValueOrDefault().ToString("N0")
+                    @ConstantHelper.DEFAULT_CURRENCY
+                </div>
+                <div class="row">
+                    <i>(@NumberConverter.Spell(Model.InvoicePayment.AmountPaid.GetValueOrDefault(), 0))</i>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row pt-2">
+            <div class="input-group-sm col-5">
+                Mode de règlement
+            </div>
+            <div class="input-group-sm col-5 w-auto ml-n2">
+                @Model.InvoicePayment.PaymentMode.DisplayText
+            </div>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.InvoicePayment.TransactionNumber))
+        {
+            <div class="form-group row pt-2">
+                <div class="input-group-sm col-3">
+                    N° de transaction
+                </div>
+                <div class="input-group-sm col-5 w-auto">
+                    @Model.InvoicePayment.TransactionNumber
+                </div>
+            </div>
+        }
+        <hr />
+        <h6 class="d-flex justify-content-between align-items-center">
+            <span class="text-info text-decoration-underline">Information sur la facture</span>
+        </h6>
+        <div class="form-group row pt-2">
+            <div class="input-group-sm col-5">
+                N° de la facture
+            </div>
+            <div class="input-group-sm col-5 w-auto ml-n2">
+                @Model.InvoicePayment.InvoiceHeader.Number
+            </div>
+        </div>
+        <div class="form-group row pt-2">
+            <div class="input-group-sm col-5">
+                Montant net à payer
+            </div>
+            <div class="input-group-sm col-5 w-auto">
+                <div class="row">
+                    @Model.InvoicePayment.InvoiceHeader.NetAmountToPay.GetValueOrDefault().ToString("N0")
+                    @ConstantHelper.DEFAULT_CURRENCY
+                </div>
+                <div class="row">
+                    <i>(@NumberConverter.Spell(Model.InvoicePayment.InvoiceHeader.NetAmountToPay.GetValueOrDefault(), 0))</i>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row pt-2">
+            <div class="input-group-sm col-5">
+                Montant avancé
+            </div>
+            <div class="input-group-sm col-5 w-auto">
+                <div class="row">
+                    @Model.InvoicePayment.InvoiceHeader.AdvancedAmount.GetValueOrDefault().ToString("N0")
+                    @ConstantHelper.DEFAULT_CURRENCY
+                </div>
+                <div class="row">
+                    <i>(@NumberConverter.Spell(Model.InvoicePayment.InvoiceHeader.AdvancedAmount.GetValueOrDefault(), 0))</i>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row pt-2">
+            <div class="input-group-sm col-5">
+                Montant restant à payer
+            </div>
+            <div class="input-group-sm col-5 w-auto font-weight-bold">
+                <div class="row">
+                    @Model.InvoicePayment.InvoiceHeader.RemainingAmountToPay.GetValueOrDefault().ToString("N0")
+                    @ConstantHelper.DEFAULT_CURRENCY
+                </div>
+                <div class="row">
+                    <i>(@NumberConverter.Spell(Model.InvoicePayment.InvoiceHeader.RemainingAmountToPay.GetValueOrDefault(), 0))</i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group row p-2">
+    <div class="input-group-sm col">
+        <div class="row">
+            <div class="input-group-sm col">
+                <a onclick="javascript:window.print();" class="btn btn-sm btn-success form-control border-0">
+                    <partial name="_IconPrint" />
+                </a>
+            </div>
+            <div class="input-group-sm col ml-n3">
+                <a asp-controller="InvoicePayment" asp-action="Summary" asp-route-id="@Model.InvoicePayment.Id" class="btn btn-sm btn-danger form-control border-0">
+                    <partial name="_IconReturn" />
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

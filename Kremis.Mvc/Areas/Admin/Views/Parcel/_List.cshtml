@@ -1,0 +1,109 @@
+﻿@model PagedResult<ParcelDto>
+
+<div>
+    <table id="tblData" class="table table-striped table-bordered table-sm bg-white text-dark" style="width:100%">
+        <thead>
+            <tr class="bg-gradient-primary text-white">
+                <th>N°</th>
+                <th>Bloc</th>
+                <th>Localité</th>
+                <th>Titre foncier</th>
+                <th>Propriétaire du titre</th>
+                <th>Superficie</th>
+                <th>Prix du m²</th>
+                <th>Prix du min</th>
+                <th>Statut</th>
+                <th class="text-center" style="width:12%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Results)
+            {
+                <tr>
+                    <td>
+                        @item.Number
+                    </td>
+                    <td>
+                        @item.BlocNumber
+                    </td>
+                    <td>
+                        @item.Locality.Name
+                    </td>
+                    @if (item.LandTitle != null)
+                    {
+                        <td>
+                            @item.LandTitle.DisplayText
+                        </td>
+                        <td>
+                            @item.LandTitle.Owner
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            TITRE FONCIER INDISPONIBLE
+                        </td>
+                        <td>
+                            RAS
+                        </td>
+                    }
+                    <td class="text-right">
+                        @item.Surface.GetValueOrDefault().ToString("N0")
+                    </td>
+                    <td class="text-right">
+                        @item.UnitPrice.GetValueOrDefault().ToString("N0")
+                    </td>
+                    <td class="text-right">
+                        @item.MinimumUnitPrice.GetValueOrDefault().ToString("N0")
+                    </td>
+                    @if (item.Status == EnumHelper.ToString(StatusEnum.Unvailable))
+                    {
+                        <td style="color:red">
+                            @item.Status
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <a href="/Admin/Parcel/Summary/@item.Id" class="btn btn-sm btn-info" style="cursor:pointer">
+                                    <partial name="_IconView" />
+                                </a>
+                                <a class="btn btn-sm btn-light" style="cursor:pointer">
+                                    <partial name="_IconEdit" />
+                                </a>
+                                @if (IdentityHelper.IsAdministrator(User))
+                                {
+                                    <a class="btn btn-sm btn-light" style="cursor:pointer">
+                                        <partial name="_IconDelete" />
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="color:green">
+                            @item.Status
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <a href="/Admin/Parcel/Summary/@item.Id" class="btn btn-sm btn-info" style="cursor:pointer">
+                                    <partial name="_IconView" />
+                                </a>
+                                <a onclick="showInPopup('@Url.Action("AddOrEdit","Parcel",new {id=item.Id},Context.Request.Scheme)','Modification d\'un lot')" class="btn btn-sm btn-success" style="cursor:pointer">
+                                    <partial name="_IconEdit" />
+                                </a>
+                                @if (IdentityHelper.IsAdministrator(User))
+                                {
+                                    <a onclick=Delete("/Admin/Parcel/Delete/@item.Id") class="btn btn-sm btn-danger" style="cursor:pointer">
+                                        <partial name="_IconDelete" />
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    @(await Component.InvokeAsync<PagerViewComponent>(Model))
+</div>

@@ -1,0 +1,51 @@
+﻿@model PagedResult<BusinessPartnerDto>
+
+    <div>
+        <table id="tblData" class="table table-striped table-bordered table-sm bg-white text-dark" style="width:100%">
+            <thead>
+                <tr class="bg-gradient-primary text-white">
+                    <th>Reference</th>
+                    <th>Nom</th>
+                    <th>N° de tél</th>
+                    <th>Solde</th>
+                    <th class="text-center" style="width:12%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Results)
+                {
+                    <tr>
+                        <td>
+                            @item.Reference
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.PhoneNumber
+                        </td>
+                        <td>
+                            @item.AccountBalance.GetValueOrDefault().ToString("N0")
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <a href="/Admin/BusinessPartner/Summary/@item.Id" class="btn btn-sm btn-info" style="cursor:pointer">
+                                    <partial name="_IconView" />
+                                </a>
+                                <a onclick="showInPopup('@Url.Action("AddOrEdit","BusinessPartner",new {id=item.Id},Context.Request.Scheme)','Modification d\'un apporteur d\'affaire')" class="btn btn-sm btn-success text-white" style="cursor:pointer">
+                                    <partial name="_IconEdit" />
+                                </a>
+                                @if (IdentityHelper.IsAdministrator(User))
+                                {
+                                    <a onclick=Delete("/Admin/BusinessPartner/Delete/@item.Id") class="btn btn-sm btn-danger" style="cursor:pointer">
+                                        <partial name="_IconDelete" />
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @(await Component.InvokeAsync<PagerViewComponent>(Model))
+    </div>

@@ -1,0 +1,84 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Presentation Layer", "1.Presentation Layer", "{D8FBE3A3-C798-4485-B0F6-016BEB1A6E27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Domain Layer", "0.Domain Layer", "{4FDFA9EB-F6CD-49B0-9679-61127EF65B3D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Business Logic Layer", "2.Business Logic Layer", "{6A2DBC7D-B3F6-4537-A23F-3E9E297F31DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Data Access Layer", "3.Data Access Layer", "{3FD4FA0A-3F45-468E-8EDB-4AACC7FBCB6C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Infrastructure Layer", "5.Infrastructure Layer", "{B95A922D-B54C-490D-8DE3-0E976872418A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.Utility Layer", "6.Utility Layer", "{5CB329AD-0AB1-44CB-A000-C8A8F2E64CA4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.API Layer", "7.API Layer", "{29F2EEA5-9E72-4397-817A-2F5C25A9F172}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kremis.Api", "Kremis.API\Kremis.Api.csproj", "{A0B409FD-8893-49FC-8CAA-9ABE04B32D19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kremis.Utility", "Kremis.Utility\Kremis.Utility.csproj", "{D57080A3-AB5B-4638-B21D-33036F30C49A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kremis.Infrastructure", "Kremis.Infrastructure\Kremis.Infrastructure.csproj", "{F91E19EA-8D3C-4E56-B87D-86EE493960E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kremis.DataAccess", "Kremis.DataAccess\Kremis.DataAccess.csproj", "{6CC7BB3D-2D4C-4EF0-BFBC-4F0DE6219DA9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kremis.BusinessLogic", "Kremis.BusinessLogic\Kremis.BusinessLogic.csproj", "{587C4148-58DE-403D-A34D-2E521CE0158E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kremis.Mvc", "Kremis.Mvc\Kremis.Mvc.csproj", "{1B72ED58-1B4D-447B-885C-734BD6B2A9A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kremis.Domain", "Kremis.Domain\Kremis.Domain.csproj", "{64B60C6C-3386-436E-872B-8C731BFDC3BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0B409FD-8893-49FC-8CAA-9ABE04B32D19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0B409FD-8893-49FC-8CAA-9ABE04B32D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0B409FD-8893-49FC-8CAA-9ABE04B32D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0B409FD-8893-49FC-8CAA-9ABE04B32D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D57080A3-AB5B-4638-B21D-33036F30C49A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D57080A3-AB5B-4638-B21D-33036F30C49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D57080A3-AB5B-4638-B21D-33036F30C49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D57080A3-AB5B-4638-B21D-33036F30C49A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F91E19EA-8D3C-4E56-B87D-86EE493960E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F91E19EA-8D3C-4E56-B87D-86EE493960E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F91E19EA-8D3C-4E56-B87D-86EE493960E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F91E19EA-8D3C-4E56-B87D-86EE493960E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CC7BB3D-2D4C-4EF0-BFBC-4F0DE6219DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CC7BB3D-2D4C-4EF0-BFBC-4F0DE6219DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CC7BB3D-2D4C-4EF0-BFBC-4F0DE6219DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CC7BB3D-2D4C-4EF0-BFBC-4F0DE6219DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{587C4148-58DE-403D-A34D-2E521CE0158E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{587C4148-58DE-403D-A34D-2E521CE0158E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{587C4148-58DE-403D-A34D-2E521CE0158E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{587C4148-58DE-403D-A34D-2E521CE0158E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B72ED58-1B4D-447B-885C-734BD6B2A9A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B72ED58-1B4D-447B-885C-734BD6B2A9A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B72ED58-1B4D-447B-885C-734BD6B2A9A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B72ED58-1B4D-447B-885C-734BD6B2A9A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64B60C6C-3386-436E-872B-8C731BFDC3BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64B60C6C-3386-436E-872B-8C731BFDC3BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64B60C6C-3386-436E-872B-8C731BFDC3BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64B60C6C-3386-436E-872B-8C731BFDC3BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A0B409FD-8893-49FC-8CAA-9ABE04B32D19} = {29F2EEA5-9E72-4397-817A-2F5C25A9F172}
+		{D57080A3-AB5B-4638-B21D-33036F30C49A} = {5CB329AD-0AB1-44CB-A000-C8A8F2E64CA4}
+		{F91E19EA-8D3C-4E56-B87D-86EE493960E9} = {B95A922D-B54C-490D-8DE3-0E976872418A}
+		{6CC7BB3D-2D4C-4EF0-BFBC-4F0DE6219DA9} = {3FD4FA0A-3F45-468E-8EDB-4AACC7FBCB6C}
+		{587C4148-58DE-403D-A34D-2E521CE0158E} = {6A2DBC7D-B3F6-4537-A23F-3E9E297F31DA}
+		{1B72ED58-1B4D-447B-885C-734BD6B2A9A9} = {D8FBE3A3-C798-4485-B0F6-016BEB1A6E27}
+		{64B60C6C-3386-436E-872B-8C731BFDC3BA} = {4FDFA9EB-F6CD-49B0-9679-61127EF65B3D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D26028F2-2AF2-4296-8ED8-CDAF31B54AFB}
+	EndGlobalSection
+EndGlobal

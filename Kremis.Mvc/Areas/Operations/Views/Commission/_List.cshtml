@@ -1,0 +1,73 @@
+﻿@model PagedResult<InvoiceHeaderDto>
+
+    <div>
+        <table id="tblData" class="table table-striped table-bordered table-sm bg-white text-dark" style="width:100%">
+            <thead>
+                <tr class="bg-gradient-primary text-white">
+                    <th>Facture</th>
+                    <th>Bénéficiaire</th>
+                    <th>Date</th>
+                    <th>Net à payer</th>
+                    <th>Avance</th>
+                    <th>Reste</th>
+                    <th>Statut</th>
+                    <th class="text-center" style="width:12%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Results)
+                {
+                    <tr>
+                        <td>
+                            <a href="/Operations/InvoiceHeader/Summary/@item.Id?returnToViewCommission=true" class="bg-transparent" style="cursor:pointer">
+                                @item.DisplayText
+                            </a>
+                        </td>
+                        <td>
+                            @item.BusinessPartner.Name
+                        </td>
+                        <td>
+                            @item.Date.GetValueOrDefault().ToShortDateString()
+                        </td>
+                        <td class="text-right">
+                            @item.CommissionToPay.GetValueOrDefault().ToString("N0")
+                        </td>
+                        <td class="text-right">
+                            @item.CommissionPaid.GetValueOrDefault().ToString("N0")
+                        </td>
+                        <td class="text-right">
+                            @item.CommissionRemainingToPay.GetValueOrDefault().ToString("N0")
+                        </td>
+                        <td>
+                            @if (item.CommissionPaid == item.CommissionToPay)
+                            {
+                                <div class="font-weight-bold" style="color:green">
+                                    @item.CommissionStatus
+                                </div>
+                            }
+                            else if (item.CommissionRemainingToPay == item.CommissionToPay)
+                            {
+                                <div class="font-weight-bold" style="color:red">
+                                    @item.CommissionStatus
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="font-weight-bold" style="color:lightseagreen">
+                                    <i>@item.CommissionStatus</i>
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <a href="/Operations/Commission/Summary/@item.Id" class="btn btn-sm btn-info" style="cursor:pointer">
+                                    <partial name="_IconView" />
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @(await Component.InvokeAsync<PagerViewComponent>(Model))
+    </div>
